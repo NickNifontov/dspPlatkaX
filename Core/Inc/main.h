@@ -114,11 +114,11 @@ void FASTfeedback(void);
 
 #define Blocked_By_COMP_TICK_MAX			10
 
-#define CURRENT_LEVEL_COMP						3900 //current level COMP
-#define VOLTAGE_LEVEL_COMP						3900 //voltage level COMP
+#define CURRENT_LEVEL_COMP						3000 //current level COMP
+#define VOLTAGE_LEVEL_COMP						3000 //voltage level COMP
 
-#define CURRENT_LEVEL						3000 //current level
-#define VOLTAGE_LEVEL						3000 //voltage level
+#define CURRENT_LEVEL						2000 //current level
+#define VOLTAGE_LEVEL						2000 //voltage level
 
 #define comp_cnt_per_wave				10 // max 10
 #define comp_cnt_per_sec				80 // max 100
@@ -129,7 +129,7 @@ void FASTfeedback(void);
 #define wave_ind_bottom_start 85 // 84.....167=83
 #define wave_ind_bottom_end 167 // 84.....167=83
 
-#define SinusTableSize				6
+#define SinusTableSize				168
 
 
 typedef enum
@@ -161,6 +161,9 @@ extern volatile uint8_t Stop_ADC_OCI; // Stop ADC OCI
 extern volatile uint16_t ADC_OCV [ADC_sizeBuffer];
 extern volatile uint16_t ADC_OCI [ADC_sizeBuffer];
 extern volatile uint16_t Adc_step;
+
+extern volatile uint16_t SinusTable [SinusTableSize];
+extern volatile uint16_t SinusTableCOMP [SinusTableSize];
 
 /* USER CODE END Private defines */
 
