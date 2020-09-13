@@ -12,7 +12,7 @@
 
 class FilterWindowMedium {
     public:
-        static float Compute (uint16_t *array, uint16_t size, uint16_t window) {
+        static float Compute (uint16_t *array, uint16_t size, uint16_t window)  {
             FastSort::Recursive(array, size);
 
             float dataBuffer = 0.0f;

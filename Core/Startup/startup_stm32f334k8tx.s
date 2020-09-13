@@ -78,6 +78,30 @@ LoopCopyDataInit:
 	adds	r2, r0, r1
 	cmp	r2, r3
 	bcc	CopyDataInit
+
+/*******************************************
+CCMRAM
+ *******************************************/
+/* Copy the ccm segment initializers from flash to SRAM */
+  movs	r1, #0
+  b	LoopCopyCcmInit
+
+CopyCcmInit:
+	ldr	r3, =_sccmidata
+	ldr	r3, [r3, r1]
+	str	r3, [r0, r1]
+	adds	r1, r1, #4
+
+LoopCopyCcmInit:
+	ldr	r0, =_sccmidata
+	ldr	r3, =_eccmidata
+	adds	r2, r0, r1
+	cmp	r2, r3
+	bcc	CopyCcmInit
+/*******************************************
+CCMRAM
+ *******************************************/
+
 	ldr	r2, =_sbss
 	b	LoopFillZerobss
 /* Zero fill the bss segment. */
@@ -89,6 +113,25 @@ LoopFillZerobss:
 	ldr	r3, = _ebss
 	cmp	r2, r3
 	bcc	FillZerobss
+
+/*******************************************
+CCMRAM
+ *******************************************/
+ ldr	r2, =_sccmram
+	b	 LoopFillZeroCcm
+/* Zero fill the ccmram segment. */
+FillZeroCcm:
+	movs r3, #0
+ 	str  r3, [r2]
+	adds r2, r2, #4
+
+LoopFillZeroCcm:
+	ldr	r3, = _eccmram
+	cmp	r2, r3
+	bcc	FillZeroCcm
+/*******************************************
+CCMRAM
+ *******************************************/
 
 /* Call the clock system intitialization function.*/
     bl  SystemInit

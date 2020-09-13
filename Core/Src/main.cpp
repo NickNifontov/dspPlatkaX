@@ -62,8 +62,6 @@ volatile uint16_t compv_flag = 0;
 volatile uint16_t compi_flag_sec = 0;
 volatile uint16_t compv_flag_sec = 0;
 
-const uint16_t SinusTable[SinusTableSize] = {10, 20, 30, 40, 50, 60};
-
 volatile uint32_t Blocked_By_COMP_TICK=0;
 
 volatile uint8_t Stop_ADC_OCV=0; // Stop ADC OCV
@@ -139,6 +137,9 @@ void ConverterProccess()
 		if (wave_ind>wave_ind_bottom_end) {
 				wave_ind=0;
 		}
+
+		DAC2->DHR12R1=CURRENT_LEVEL_COMP;
+		DAC1->DHR12R2=VOLTAGE_LEVEL_COMP;
 
 		if ((wave_ind==0) || (wave_ind==wave_ind_top_end+1)) {
 			if ( ((compi_flag>0) || (compv_flag>0)) && (compi_flag_sec<=comp_cnt_per_sec) && (compv_flag_sec<=comp_cnt_per_sec) ) {
@@ -289,6 +290,7 @@ void HAL_PWR_PVDCallback(void)
 	}
 }
 
+
 void HAL_COMP_TriggerCallback(COMP_HandleTypeDef *hcomp)
 {
   if (hcomp->Instance==COMP4) {
@@ -314,7 +316,7 @@ void HAL_COMP_TriggerCallback(COMP_HandleTypeDef *hcomp)
 }
 
 //void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc)
-void HAL_ADCEx_InjectedCallback(void)
+void  HAL_ADCEx_InjectedCallback(void)
 {
 	if( __HAL_ADC_GET_FLAG(&hadc1, ADC_FLAG_JEOC | ADC_FLAG_JEOS)) {
 		__HAL_ADC_CLEAR_FLAG(&hadc1, ADC_FLAG_JEOC | ADC_FLAG_JEOS);

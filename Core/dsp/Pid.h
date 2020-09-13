@@ -40,7 +40,7 @@ public:
     } input;
 
 public:
-    PidController& SetReference (float reference) {
+    PidController& SetReference (float reference)   {
         input.reference = reference;
         return *this;
     }
